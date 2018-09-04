@@ -16,7 +16,7 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import android.text.TextUtils;
 
 public class MethodParser {
-	
+//test
 	// Record method name and arguments
 	public static String parseMethodArgs(MethodHookParam param, String[] argNames){
 		List<String> formattedArgsList = new ArrayList<String>();
