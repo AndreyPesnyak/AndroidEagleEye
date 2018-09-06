@@ -13,6 +13,7 @@ import java.util.Random;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.os.Environment;
+import android.util.Log;
 
 public class Util {
     public static final String SELF_PACKAGE_NAME = "zctym.eagleeye";

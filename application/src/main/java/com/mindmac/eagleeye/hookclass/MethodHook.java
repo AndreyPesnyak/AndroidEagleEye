@@ -4,6 +4,7 @@ import com.mindmac.eagleeye.MethodParser;
 import com.mindmac.eagleeye.Util;
 
 
+import android.content.Intent;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
