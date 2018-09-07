@@ -14,6 +14,7 @@ import org.apache.http.util.EntityUtils;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 public class MethodParser {
 

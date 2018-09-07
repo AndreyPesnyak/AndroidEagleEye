@@ -2,6 +2,7 @@ package com.mindmac.eagleeye.hookclass;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import com.mindmac.eagleeye.MethodParser;
 import com.mindmac.eagleeye.Util;
@@ -63,21 +64,17 @@ public class ContextImplHook extends MethodHook {
 		String formattedArgs = MethodParser.parseMethodArgs(param, argNamesArray);
 		if(formattedArgs == null)
 			formattedArgs = "";
-		Intent intent = (Intent) param.args[0];
-		if (!intent.getExtras().isEmpty()) {
-			formattedArgs += " extra="+intent.getExtras().toString();
-			TextUtils.concat("asd");
+		if (param.args[0].getClass().equals(Intent.class))
+		{
+			Intent intent = (Intent) param.args[0];
+			if (!intent.getExtras().isEmpty()) {
+				formattedArgs=formattedArgs.replace(" (has extras)",", extra="+intent.getExtras().toString());
+				}
 		}
 		String returnValue = MethodParser.parseReturnValue(param);
 		String logMsg = String.format("{\"Basic\":[\"%d\",\"%s\",\"false\"], " +
 						"\"InvokeApi\":{\"%s->%s\":{%s}, \"return\":{%s}}}", uid, Util.FRAMEWORK_HOOK_SYSTEM_API,
 				this.getClassName(), this.getMethodName(), formattedArgs, returnValue);
-/*		if (param.args[0].getClass().equals(Intent.class)) {
-			Intent intent = (Intent) param.args[0];
-			Log.i("ZCTYM", intent.getExtras().toString());
-			Log.i("ZCTYM",intent.toString());
-			Log.i("ZCTYM", intent.getExtras().keySet().toString());
-		}*/
 		Log.i(Util.LOG_TAG, logMsg);
 	}
 
@@ -114,6 +111,7 @@ public class ContextImplHook extends MethodHook {
 			else
 				argNames = "intent";
 			logBroadcast(uid, param, argNames);
+			return;
 		}
 		else if (mMethod == Methods.sendOrderedBroadcast)
 		{
@@ -122,6 +120,7 @@ public class ContextImplHook extends MethodHook {
 			else
 				argNames = "intent|receiverPermission";
 			logBroadcast(uid, param, argNames);
+			return;
 		}
 		log(uid, param, argNames);
 	}
