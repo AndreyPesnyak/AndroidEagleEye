@@ -19,6 +19,9 @@ public class AbstractHttpClientHook extends MethodHook {
 	// external/apache-http/src/org/apache/http/impl/client/AbstractHttpClient.java
 	// http://developer.android.com/reference/org/apache/http/impl/client/AbstractHttpClient.html
 
+	//TODO запилить метод  protected  CloseableHttpResponse 	doExecute(HttpHost target, HttpRequest request, HttpContext context)
+	// запилить для класса org.apache.http.impl.client.HttpClientBuilder
+
 	private enum Methods {
 		execute
 	};

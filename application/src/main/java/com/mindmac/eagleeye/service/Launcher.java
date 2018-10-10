@@ -53,10 +53,7 @@ public class Launcher implements IXposedHookLoadPackage, IXposedHookZygoteInit {
     private static boolean mConnectivityManagerHooked = false;
     private static boolean mLocationManagerHooked = false;
     private static boolean mPackageManagerHooked = false;
-    private static boolean mPowerManagerHooked = false;
-    private static boolean mTelephonyManagerHooked = false;
     private static boolean mNotificationManagerHooked = false;
-    private static boolean mWifiManagerHooked = false;
 
     // Api config pattern, validated one is like Lcom/example/class;->Fun(Ljava/lang/String;)Ljava/lang/String;
     private static Pattern apiConfigPattern = Pattern.compile("^L.*(;->.*\\(.*\\).*)?$");
@@ -109,9 +106,6 @@ public class Launcher implements IXposedHookLoadPackage, IXposedHookZygoteInit {
         // ApplicationManager
         hookAll(ApplicationPackageManagerHook.getMethodHookList());
 
-        // AudioRecord
-        hookAll(AudioRecordHook.getMethodHookList());
-
         // BluetoothAdapter
         hookAll(BluetoothAdapterHook.getMethodHookList());
 
@@ -123,9 +117,6 @@ public class Launcher implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
         // Cipher
         hookAll(CipherHook.getMethodHookList());
-
-        // Camera - Camera
-        hookAll(CameraHook.getMethodHookList());
 
         // ContentResolver
         hookAll(ContentResolverHook.getMethodHookList());
@@ -168,6 +159,9 @@ public class Launcher implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
         // SmsManager
         hookAll(SmsManagerHook.getMethodHookList());
+
+        // SQLiteDatabase
+        hookAll(SQLiteDatabase.getMethodHookList());
 
         // URL
         hookAll(URLHook.getMethodHookList());
@@ -214,24 +208,6 @@ public class Launcher implements IXposedHookLoadPackage, IXposedHookZygoteInit {
             if (!mPackageManagerHooked) {
                 hookAll(PackageManagerHook.getMethodHookList(instance));
                 mPackageManagerHooked = true;
-            }
-        }else if (serviceName.equals(Context.POWER_SERVICE)) {
-            // Power manager
-            if (!mPowerManagerHooked) {
-                hookAll(PowerManagerHook.getMethodHookList(instance));
-                mPackageManagerHooked = true;
-            }
-        } else if (serviceName.equals(Context.TELEPHONY_SERVICE)) {
-            // Telephony manager
-            if (!mTelephonyManagerHooked) {
-                hookAll(TelephonyManagerHook.getMethodHookList(instance));
-                mTelephonyManagerHooked = true;
-            }
-        }else if (serviceName.equals(Context.WIFI_SERVICE)) {
-            // Wifi manager
-            if (!mWifiManagerHooked) {
-                hookAll(WifiManagerHook.getMethodHookList(instance));
-                mWifiManagerHooked = true;
             }
         }
     }

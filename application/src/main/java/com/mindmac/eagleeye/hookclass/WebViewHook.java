@@ -21,19 +21,20 @@ public class WebViewHook extends MethodHook {
 
 	// public void loadUrl(String url)
 	// public void loadUrl(String url, Map<String, String> additionalHttpHeaders)
+	// public void addJavascriptInterface (Object object, String name)
 	// frameworks/base/core/java/android/webkit/WebView.java
 	// http://developer.android.com/reference/android/webkit/WebView.html
 
 	// @formatter:on
 
 	private enum Methods {
-		loadUrl
+		loadUrl, addJavascriptInterface
 	};
 
 	public static List<MethodHook> getMethodHookList() {
 		List<MethodHook> methodHookList = new ArrayList<MethodHook>();
 		methodHookList.add(new WebViewHook(Methods.loadUrl));
-		
+		methodHookList.add(new WebViewHook(Methods.addJavascriptInterface));
 		return methodHookList;
 	}
 	
@@ -47,6 +48,9 @@ public class WebViewHook extends MethodHook {
 				argNames = "url";
 			else if(param.args.length == 2)
 				argNames = "url|additionalHttpHeaders";
+		}
+		if(mMethod == Methods.addJavascriptInterface){
+				argNames = "object|name";
 		}
 
 		log(uid, param, argNames);
